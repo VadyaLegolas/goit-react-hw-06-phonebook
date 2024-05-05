@@ -1,5 +1,6 @@
+import { useState } from 'react';
+
 import { Button, FormContact, Input, Label } from './ContactForm.styled';
-import React, { useState } from 'react';
 
 export const ContactForm = ({ onSubmit }) => {
   const [name, setName] = useState('');

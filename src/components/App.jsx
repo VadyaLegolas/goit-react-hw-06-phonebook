@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { nanoid } from 'nanoid';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 export function App() {
   const [contacts, setContacts] = useState(() => {
