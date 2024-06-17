@@ -1,7 +1,10 @@
 import { ContactElement } from 'components/ContactElemet/ContactElement';
 import { List } from './ContactList.styled';
+import { useSelector } from 'react-redux';
 
-export const ContactList = ({ contacts, onDeleteContact }) => {
+export const ContactList = () => {
+  const contacts = useSelector(state => state.contacts);
+  
   return (
     <List>
       {contacts.map(({ id, name, number }) => {
@@ -11,7 +14,6 @@ export const ContactList = ({ contacts, onDeleteContact }) => {
             id={id}
             name={name}
             number={number}
-            onDelete={onDeleteContact}
           />
         );
       })}

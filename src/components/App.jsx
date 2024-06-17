@@ -1,71 +1,70 @@
-import { useEffect, useState } from 'react';
-import { nanoid } from 'nanoid';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { useEffect, useState } from 'react';
+// import { nanoid } from 'nanoid';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
-import { ContactForm } from './ContactForm/ContactForm';
-import { ContactList } from './ContactList/ContactList';
-import { Filter } from './Filter/Filter';
+import { ContactForm } from "./ContactForm/ContactForm";
+import { ContactList } from "./ContactList/ContactList";
+import { Filter } from "./Filter/Filter";
 
-export function App() {
-  const [contacts, setContacts] = useState(() => {
-    const localStorageContacts = JSON.parse(localStorage.getItem('contacts'));
-    if (localStorageContacts) {
-      return localStorageContacts;
-    }else {
-      return [];
-    }
-  });
-  const [filter, setFilter] = useState('');
+// import { ContactForm } from './ContactForm/ContactForm';
+// import { ContactList } from './ContactList/ContactList';
+// import { Filter } from './Filter/Filter';
+// import { useDispatch } from 'react-redux';
+// import { addContact } from '../redux/actions/contactsAction';
 
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
+// export function App() {
+//   const dispatcher = useDispatch();
+//   const [contacts, setContacts] = useState(() => {
+//     const localStorageContacts = JSON.parse(localStorage.getItem('contacts'));
+//     if (localStorageContacts) {
+//       return localStorageContacts;
+//     }else {
+//       return [];
+//     }
+//   });
+//   const [filter, setFilter] = useState('');
 
-    if (contacts.length === 0) localStorage.removeItem('contacts');
-  }, [contacts]);
+//   useEffect(() => {
+//     localStorage.setItem('contacts', JSON.stringify(contacts));
 
-  const addContact = data => {
-    const contact = { id: nanoid(), ...data };
-    const normalizeName = contact.name.toLowerCase();
+//     if (contacts.length === 0) localStorage.removeItem('contacts');
+//   }, [contacts]);
 
-    if (contacts.find(({ name }) => name.toLowerCase() === normalizeName)) {
-      toast.error(`${contact.name} is already in contacts`, {
-        position: 'top-center',
-        autoClose: 3000,
-        theme: 'colored',
-      });
-      return;
-    }
+  
 
-    setContacts(prevContact => [contact, ...prevContact]);
-  };
+//   const changeFilter = e => {
+//     setFilter(e.currentTarget.value);
+//   };
 
-  const deleteContact = contactId => {
-    setContacts(prevContact =>
-      prevContact.filter(({ id }) => id !== contactId)
-    );
-  };
+//   const getVisibleContacts = () => {
+//     const normalizedFilter = filter.toLowerCase();
+//     return contacts.filter(contact =>
+//       contact.name.toLowerCase().includes(normalizedFilter)
+//     );
+//   };
 
-  const changeFilter = e => {
-    setFilter(e.currentTarget.value);
-  };
+//   const visibleContacts = getVisibleContacts();
+//   return (
+//     <>
+//       <h1>Phonebook</h1>
+//       <ContactForm onSubmit={dispatcher(addContact())} />
+//       <h2>Contacts</h2>
+//       <Filter value={filter} onChange={changeFilter} />
+//       <ContactList contacts={visibleContacts} />
+//       <ToastContainer />
+//     </>
+//   );
+// }
+export const App = () => {
 
-  const getVisibleContacts = () => {
-    const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
-  };
-
-  const visibleContacts = getVisibleContacts();
   return (
     <>
       <h1>Phonebook</h1>
-      <ContactForm onSubmit={addContact} />
+      <ContactForm />
       <h2>Contacts</h2>
-      <Filter value={filter} onChange={changeFilter} />
-      <ContactList contacts={visibleContacts} onDeleteContact={deleteContact} />
-      <ToastContainer />
+      <Filter />
+      <ContactList />
     </>
   );
 }
