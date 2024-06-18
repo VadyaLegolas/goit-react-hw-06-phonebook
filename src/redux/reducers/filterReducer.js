@@ -1,3 +1,8 @@
 export const filterReducer =(state = '', action) => {
-    return state
+    switch (action.type) {
+        case 'FILTER_CONTACTS':
+            return action.payload.value
+        default:
+            return state
+    }
 }
