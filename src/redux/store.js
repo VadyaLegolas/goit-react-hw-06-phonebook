@@ -11,14 +11,14 @@
 //   } from 'redux-persist'
 // import storage from 'redux-persist/lib/storage';
 
-// import { contactsReducer } from './reducers'; //todo: add reducer here
+// import { rootReducer } from './reducers'; 
 
 // const persistConfig = {
-//   key: 'root',
+//   key: 'contacts',
 //   storage,
 // };
 
-// const namedPersistReducer = persistReducer(persistConfig, contactsReducer);
+// const namedPersistReducer = persistReducer(persistConfig, rootReducer);
 
 // export const store = configureStore({
 //   reducer: {
@@ -34,13 +34,7 @@
 
 // export const persistor = persistStore(store);
 
-import { createStore } from "redux";
-import { devToolsEnhancer } from "@redux-devtools/extension";
-import { rootReducer } from "./reducers";
+import { reducer } from "./reducer";
+import { configureStore } from "@reduxjs/toolkit";
 
-
-const enhancer = devToolsEnhancer();
-export const store = createStore(rootReducer, enhancer);
-
-// store.dispatch({ type: "ADD_CONTACT", payload: { id: 1, name: "Bob", number: 123 } })
-// store.dispatch({ type: "ADD_CONTACT", payload: { id: 2, name: "Alice", number: 456 } })
+export const store = configureStore({reducer});
