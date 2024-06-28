@@ -7,6 +7,9 @@ export const ContactList = () => {
   const filterContacts = useSelector(state => state.filter);
   const getVisibleContacts = () => {
     const normalizedFilter = filterContacts.toLowerCase();
+    if (!normalizedFilter) {
+      return contacts;
+    }
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizedFilter)
     );
@@ -16,9 +19,13 @@ export const ContactList = () => {
 
   return (
     <List>
-      {visibleContacts.map(({ id, name, number }) => {
-        return <ContactElement key={id} id={id} name={name} number={number} />;
-      })}
+      {visibleContacts.length > 0 ? (
+        visibleContacts.map(({ id, name, number }) => (
+          <ContactElement key={id} id={id} name={name} number={number} />
+        ))
+      ) : (
+        <p>No contacts found.</p>
+      )}
     </List>
   );
 };
