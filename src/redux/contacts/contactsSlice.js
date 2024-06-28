@@ -7,26 +7,27 @@ export const contactsSlice = createSlice({
   initialState: contactsInitialState,
   reducers: {
     addContact: {
-      reducer: (state, action) => {
-        const normalizeName = action.payload.name.toLowerCase();
+  reducer: (state, action) => {
+    const { name } = action.payload;
+    const normalizeName = name.toLowerCase();
 
-        if (state.find(({ name }) => name.toLowerCase() === normalizeName)) {
-          toast.error(`"${action.payload.name}" is already in contacts`, {
-            position: 'top-center',
-            autoClose: 3000,
-            theme: 'colored',
-          });
-          return;
-        }
+    if (state.find(({ name }) => name.toLowerCase() === normalizeName)) {
+      toast.error(`"${name}" is already in contacts`, {
+        position: 'top-center',
+        autoClose: 3000,
+        theme: 'colored',
+      });
+    } else {
+      state.push(action.payload);
+    }
+  },
+  
+  prepare: data => {
+    const id = nanoid();
+    return { payload: { id, ...data } };
+  },
+},
 
-        state.push(action.payload);
-      },
-      
-      prepare: data => {
-        const id = nanoid();
-        return { payload: { id, ...data } };
-      },
-    },
 
     deleteContact: {
       reducer: (state, action) => {
